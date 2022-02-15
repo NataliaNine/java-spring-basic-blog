@@ -3,10 +3,7 @@ package com.pluralsight.blog.data;
 import com.pluralsight.blog.model.Post;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class PostRepository {
@@ -44,11 +41,13 @@ public class PostRepository {
                     "When a stranger passes us a top secret SD card the adventure begins.  Jason Bourne says, \"Hi\".",
                     "Sarah Holderness", new Date())
     ));
+
     public List<Post> getAllPosts() {
         return ALL_POSTS;
     }
 
     public Post findById(Long id) {
-        return null;
+        Optional<Post> p = ALL_POSTS.stream().filter(post -> id == post.getId()).findFirst();
+        return p.isPresent() ? p.get() : null;
     }
 }
